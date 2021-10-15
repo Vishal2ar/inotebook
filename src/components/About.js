@@ -1,10 +1,16 @@
-import React,{useContext} from "react";
+import React,{useContext,useEffect} from "react";
 import {Note} from "../App"
 
 const  About = () => {
     const a  = useContext(Note);
-    //
-    return(<div>  {a.name}
+    
+    useEffect(() => {
+        a.updateState();
+        // eslint-disable-next-line
+    }, [])
+
+    return(<div>  {a.state.name}
+                    
         </div>)
 }
 

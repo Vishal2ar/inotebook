@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
@@ -9,15 +9,28 @@ import {
   Route
 } from "react-router-dom";
 
-const state = { "name" : "vihal", "class" : "Test"};
+
 export const Note = React.createContext();
 
+
+
 function App() {
+  const s1 = { "name" : "vihal", "class" : "Test"};
+const [state, setstate] = useState(s1)
+const updateState = () => {
+setTimeout(() => {
+  setstate(
+    { "name" : "Rahul", "class" : "Test"}
+  )
+  
+}, 10000);
+
+}
   
   return (
     <> 
     
-    <Note.Provider value= {state}> 
+    <Note.Provider value= {{state,updateState}}> 
      <Router>
        <div>
         <Navbar />
