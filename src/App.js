@@ -46,7 +46,28 @@ let n1 = [{
 }
 ];
 
+
+
 const [notes, setnotes] = useState(n1);
+// Del note with ID
+const noteDel = (id) => {
+console.log(id);
+setnotes(notes.filter(note => note._id !== id))
+}
+// add new note 
+const AddNote1 = (topic,discription,tag) => {
+  console.log(" Reached App")
+  let newNote = [{
+    "_id": "616597038239afae52298d35",
+    "userid": "615f50194d7a841796947361",
+    "topic": topic,
+    "discription": discription,
+    "tag": tag,
+    "date": "2021-10-12T14:09:07.459Z",
+    "__v": 0
+  }]
+setnotes(notes.concat(newNote))
+  }
 
 
   const s1 = { "name" : "vihal", "class" : "Test"};
@@ -63,7 +84,7 @@ setTimeout(() => {
   
   return (
     <> 
-    <yourNote.Provider value ={{notes,setnotes}} >
+    <yourNote.Provider value ={{notes,AddNote1,noteDel}} >
     <Note.Provider value= {{state,updateState}}> 
      <Router>
        <div>
