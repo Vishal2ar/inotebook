@@ -10,7 +10,7 @@ router.get("/getData",fetchUser,
 async (req,res)=> {
     try {
         console.log(req.user);
-        const note = await Note.findOne({userid : req.user})
+        const note = await Note.find({userid : req.user})
         res.json(note);
     } catch (error) {
         res.status(500).send("error occured");
@@ -20,8 +20,8 @@ async (req,res)=> {
 })
 // Route 2 : Upload user Notes in DB 
 router.post("/postData",fetchUser,
-[ body('topic').isLength({ min: 5 }),
-body('discription').isLength({ min: 5 })]
+[ body('topic').isLength({ min: 2 }),
+body('discription').isLength({ min: 2 })]
 ,async (req,res) => {
     const {topic,discription,tag} = req.body;
     try {

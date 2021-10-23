@@ -6,7 +6,7 @@ function AddNote() {
     
     const origin = useContext(yourNote);
     const {AddNote1} = origin;
-    const [newNote, setnewNote] = useState({topic:"",discription:"" ,tag:"Default"})
+    const [newNote, setnewNote] = useState({topic:"",discription:"" ,tag:""})
     const onChange =(e) =>{
         setnewNote({...newNote,[e.target.name]:e.target.value})
     } 
@@ -29,6 +29,10 @@ function AddNote() {
                 <div className="mb-3">
                     <label htmlFor="discription" className="form-label">discription</label>
                     <input type="text" className="form-control" id="discription"  name="discription" onChange={onChange} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">Tag</label>
+                    <input type="text" className="form-control" id="tag"  name="tag" onChange={onChange} />
                 </div>
                 
                 <button type="submit" className="btn btn-primary" onClick={handleClick} >Add Note</button>
