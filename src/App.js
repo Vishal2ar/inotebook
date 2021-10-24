@@ -71,9 +71,10 @@ const AddNote1 =  async (topic, discription, tag) =>{
         },
         body: JSON.stringify({ topic, discription, tag })
       });
-    //let data = await res.json();
+      // eslint-disable-next-line
+    let data = await res.json();
     // app login 
-    //console.log(data);
+    console.log(data);
     } catch (error) {
       console.log(error)
     }
@@ -89,7 +90,28 @@ const AddNote1 =  async (topic, discription, tag) =>{
     }];
     setnotes(notes.concat(newNote));
   }
+// update Note 
+const updateOneNote  = async (id,topic,discription,tag) =>{
 
+try {
+  //api call to update note 
+  let res = await fetch(`http://localhost:3001/api/notes/updateData/${id}`,
+  {
+     method: "PUT",
+     headers: {
+       "Content-Type": "application/json",
+       "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmE3ODI1YjFlZjEwM2JiN2ExMjRkMiIsImlhdCI6MTYzNDM2NzUyNX0.ygs2gqGNoTWjngSPccP_PL3YHMjkl6e5_E_47IyXxCc"
+     },
+     body: JSON.stringify({ topic, discription, tag })
+   });
+   // eslint-disable-next-line
+ let data = await res.json();
+ // app login 
+ console.log(data);
+} catch (error) {
+  console.log(error)
+}
+}
 
   const s1 = { "name" : "vihal", "class" : "Test"};
 const [state, setstate] = useState(s1)
@@ -105,7 +127,7 @@ setTimeout(() => {
   
   return (
     <> 
-    <yourNote.Provider value ={{notes,AddNote1,noteDel,getNotes}} >
+    <yourNote.Provider value ={{notes,AddNote1,noteDel,getNotes,updateOneNote}} >
     <Note.Provider value= {{state,updateState}}> 
      <Router>
        <div>

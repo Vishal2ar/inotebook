@@ -40,6 +40,7 @@ body('discription').isLength({ min: 2 })]
 router.put("/updateData/:id",fetchUser,async (req,res) => {
     const {topic,discription,tag} = req.body;
     try {
+        //console.log(req.user);
         let newNote  = {};
         if(topic){newNote.topic = topic}
         if(discription){newNote.discription = discription}
