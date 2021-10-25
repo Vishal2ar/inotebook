@@ -62,7 +62,7 @@ export const Note = () => {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>Close</button>
-                                <button type="button" className="btn btn-primary" onClick= {handleClick}>Update Note</button>
+                                <button disabled={newNote.etopic.length < 2 || newNote.ediscription.length < 2 }  type="button" className="btn btn-primary" onClick= {handleClick}>Update Note</button>
                             </div>
                         </div>
                     </div>

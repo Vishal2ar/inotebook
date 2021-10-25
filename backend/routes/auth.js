@@ -40,7 +40,8 @@ body('name').isLength({ min: 5 })]
        "id" : user.id
      } 
      const token = jwt.sign(data,JWT_S);
-     res.json({token});
+  
+     res.json({success:true,token});
       
     //   .then(User => res.json(User)).catch(err => {console.log(errors);
     // res.json(errors)})
@@ -50,35 +51,39 @@ body('name').isLength({ min: 5 })]
     catch(error)
       {
         // status 500 some error occurred 
-        res.status(500).send("error occured");
+        res.status(500).send(success,"error occured");
         console.error(error.message)
       }
 })
+
+
+
 //Route 2 : Login route Post req Authentication not needed 
 router.post("/login",
   [body('email',"Enter Valid Credentials").isEmail(),
   body('password',"Password cannot be empty").exists()],
   async (req,res)=>{
   const errors = validationResult(req);
+  let success = false;
   if(!errors.isEmpty()){
-    res.status(400).json({errors: errors.array()})
+    res.status(400).json({success,errors: errors.array()})
   }
   const {email,password} = req.body;
   try {
     let user = await User.findOne({email});
     if(!user)
     {
-      res.status(400).json({error :"Incorrect Credentials"})
+      res.status(400).json({success,error :"Incorrect Credentials"})
     }
   if(! await bcrypt.compare(password,user.password))
     {
-      res.status(400).json({error :"Incorrect Credentials"})
+      res.status(400).json({success,error :"Incorrect Credentials"})
     }
     data = {
       "id" : user.id
     } 
     const token = jwt.sign(data,JWT_S);
-    res.json({token});
+    res.json({success:true,token});
   
   } catch (error) {
     res.status(500).send("error occured");

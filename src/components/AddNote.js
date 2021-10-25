@@ -35,7 +35,7 @@ function AddNote() {
                     <input type="text" className="form-control" id="tag"  name="tag" onChange={onChange} />
                 </div>
                 
-                <button type="submit" className="btn btn-primary" onClick={handleClick} >Add Note</button>
+                <button disabled={newNote.topic.length < 2 || newNote.discription.length < 2 } type="submit" className="btn btn-primary" onClick={handleClick} >Add Note</button>
             </form>
         </div>
         </div>

@@ -8,6 +8,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Signin from './components/Signin';
+import Signup from './components/Signup';
 
 
 export const Note = React.createContext();
@@ -74,21 +76,14 @@ const AddNote1 =  async (topic, discription, tag) =>{
       // eslint-disable-next-line
     let data = await res.json();
     // app login 
-    console.log(data);
+    //console.log(data);
+    setnotes(notes.concat(data));
     } catch (error) {
       console.log(error)
     }
     
-    let newNote = [{
-      "_id": "616597038239afae52298d35",
-      "userid": "615f50194d7a841796947361",
-      "topic": topic,
-      "discription": discription,
-      "tag": tag,
-      "date": "2021-10-12T14:09:07.459Z",
-      "__v": 0
-    }];
-    setnotes(notes.concat(newNote));
+ 
+   
   }
 // update Note 
 const updateOneNote  = async (id,topic,discription,tag) =>{
@@ -108,6 +103,23 @@ try {
  let data = await res.json();
  // app login 
  console.log(data);
+// Update on UI 
+        const element = [];
+        for (let index = 0; index < notes.length; index++) {
+          element[index]= notes[index];
+
+          if (notes[index]._id === id)
+            {
+              element[index].topic= topic;
+              element[index].discription= discription;
+              element[index].tag= tag; 
+            
+            } 
+          
+        }
+        //console.log(element)
+       setnotes(element);
+
 } catch (error) {
   console.log(error)
 }
@@ -137,10 +149,15 @@ setTimeout(() => {
         <Route exact path="/">
             <Home />
          </Route>
-
           <Route  exact path="/about">
           <About />
-          </Route>          
+          </Route>       
+          <Route  exact path="/Signin">
+          <Signin />
+          </Route>  
+          <Route  exact path="/Signup">
+          <Signup />
+          </Route>     
         </Switch>
         </div>
          </div>
