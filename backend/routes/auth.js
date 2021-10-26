@@ -14,19 +14,20 @@ router.post("/createUser",
 // validation occurs here 
 [ body('email',"The email is ot valid").isEmail(),
 body('password').isLength({ min: 5 }),
-body('name').isLength({ min: 5 })]
+body('name').isLength({ min: 2 })]
 //harry used array
 ,async (req,res)=> {
+    let success= false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       //https://express-validator.github.io/docs/
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
 
   try{
    if (await User.findOne({email : req.body.email}))
       {
-        return res.status(400).json({"message":"email already exist"})
+        return res.status(400).json({success,"message":"email already exist"})
       }
       // using BCRYPTJS for Hashing password genrating Salt
     const salt =  await bcrypt.genSalt(10);
