@@ -4,7 +4,7 @@ import Noteitem from './Noteitem';
 
 export const Note = () => {
     const context = useContext(yourNote);
-    let { notes, getNotes,updateOneNote } = context;
+    let { notes, getNotes,updateOneNote,shootAlert } = context;
     const [newNote, setnewNote] = useState({eid: "",etopic:"",ediscription:"" ,etag:""})
     useEffect(() => {
         getNotes()
@@ -24,6 +24,7 @@ export const Note = () => {
        // console.log(newNote);
         refClose.current.click()
         updateOneNote(newNote.eid,newNote.etopic,newNote.ediscription,newNote.etag);
+        shootAlert("success","Note Updated");
     }
     return (
 

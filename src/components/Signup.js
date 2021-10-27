@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState,useContext} from 'react'
 import { useHistory } from 'react-router-dom';
+import { yourNote } from '../App';
 
 function Signup() {
     const [signUp, setsignUp] = useState({email:"",name:"",password:"",cpassword:""})
      let history = useHistory();
-
+    const alertFunction =  useContext(yourNote)
+    const {shootAlert} = alertFunction;
     const onChange = (e) => {
         setsignUp({...signUp,[e.target.name]: e.target.value});
         
@@ -26,19 +28,22 @@ function Signup() {
                 console.log(status);
                 if(status.success){
                     localStorage.setItem('token',status.token);
+                    shootAlert("success","Signup Success");
                     history.push("/");
                 }
                 else{
-                    alert("Signup Failed")
+                    shootAlert("warning","Signup failed");
                 }
                 
             }
             else{
-                   alert("Password Do not Match"); 
+                   
+                   shootAlert("warning","Password Do not Match");
             }
             
         } catch (error) {
             console.log(error);
+            shootAlert("warning","Signup failed");
         }
     }
     return (

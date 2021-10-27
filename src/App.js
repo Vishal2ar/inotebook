@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Signin from './components/Signin';
 import Signup from './components/Signup';
+import Alert from './components/Alert';
 
 
 export const Note = React.createContext();
@@ -23,6 +24,15 @@ function App() {
 // note sample 
 let n1 =[{}]; // needed as the data will be loaded via api after 1st go it will fail without it 
 const [notes, setnotes] = useState(n1);
+const [alert, setalert] = useState(null);
+
+const shootAlert = (type,message) => {
+  setalert({type,message});
+  setInterval(() => {
+    setalert(null);
+  },5000);
+
+}
 
 
 
@@ -139,11 +149,12 @@ setTimeout(() => {
   
   return (
     <> 
-    <yourNote.Provider value ={{notes,AddNote1,noteDel,getNotes,updateOneNote}} >
+    <yourNote.Provider value ={{notes,AddNote1,noteDel,getNotes,updateOneNote,shootAlert}} >
     <Note.Provider value= {{state,updateState}}> 
      <Router>
        <div>
         <Navbar />
+        <Alert alert={alert} />
         <div className="contAINER">
         <Switch>
         <Route exact path="/">

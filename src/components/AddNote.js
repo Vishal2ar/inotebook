@@ -5,7 +5,7 @@ import { yourNote } from "../App";
 function AddNote() {
     
     const origin = useContext(yourNote);
-    const {AddNote1} = origin;
+    const {AddNote1,shootAlert} = origin;
     const [newNote, setnewNote] = useState({topic:"",discription:"" ,tag:""})
     const onChange =(e) =>{
         setnewNote({...newNote,[e.target.name]:e.target.value})
@@ -14,6 +14,7 @@ function AddNote() {
     const handleClick = (e) => {
         e.preventDefault();
         AddNote1(newNote.topic,newNote.discription,newNote.tag);
+        shootAlert("success","Note Added");
             }
     
     

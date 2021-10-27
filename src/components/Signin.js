@@ -1,6 +1,6 @@
-import React ,{useState} from 'react'
+import React ,{useState,useContext} from 'react'
 import { useHistory } from 'react-router-dom'
-
+import { yourNote } from '../App';
 
 
 function Signin() {
@@ -8,7 +8,8 @@ function Signin() {
 const [login, setlogin] = useState({email:"",password:""})
 
 let history = useHistory();
-
+const context = useContext(yourNote);
+let {shootAlert} = context;
 const onChange= (e) =>
 {
     setlogin({...login,[e.target.name]:e.target.value})
@@ -29,11 +30,17 @@ const signInCheck = async (e) => {
     console.log(loginStatus);
     if(loginStatus.success)
     {       // need to read more 
+        shootAlert("success","Login Success");
         localStorage.setItem('token',loginStatus.token)
         history.push("/")
+        
+    }
+    else{
+        shootAlert("warning","Login failed");
     }
     } catch (error) {
         console.log(error);
+        shootAlert("warning","Login failed");
     }
 
 
