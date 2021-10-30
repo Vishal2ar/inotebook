@@ -6,11 +6,13 @@ import About from './components/About';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Alert from './components/Alert';
+
 
 
 export const Note = React.createContext();
@@ -35,15 +37,19 @@ const shootAlert = (type,message) => {
 }
 
 
-
+let history = useHistory();
 //get notes for the user 
 async function getNotes() {
+   if(!localStorage.getItem('token')) 
+        {
+          history.push("/login"); 
+        }
   let res = await fetch("http://localhost:3001/api/notes/getData",
                   {
                     method : "GET",
-                    headers: {
+                    headers: {  
                       "Content-Type": "application/json",
-                      "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmE3ODI1YjFlZjEwM2JiN2ExMjRkMiIsImlhdCI6MTYzNDM2NzUyNX0.ygs2gqGNoTWjngSPccP_PL3YHMjkl6e5_E_47IyXxCc"
+                      "auth-token": localStorage.getItem('token')
                       }
                   });
   let data = await res.json();
@@ -60,12 +66,12 @@ setnotes(data);
      method : "DELETE",
      headers: {
        "Content-Type": "application/json",
-       "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmE3ODI1YjFlZjEwM2JiN2ExMjRkMiIsImlhdCI6MTYzNDM2NzUyNX0.ygs2gqGNoTWjngSPccP_PL3YHMjkl6e5_E_47IyXxCc"
+       "auth-token": localStorage.getItem('token')
        }
    });
 let data = await res.json();
       console.log(data);
-
+      shootAlert("success","Note Deleted");
     // Logic on User end
     console.log(id);
     setnotes(notes.filter(note => note._id !== id));
@@ -79,7 +85,7 @@ const AddNote1 =  async (topic, discription, tag) =>{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmE3ODI1YjFlZjEwM2JiN2ExMjRkMiIsImlhdCI6MTYzNDM2NzUyNX0.ygs2gqGNoTWjngSPccP_PL3YHMjkl6e5_E_47IyXxCc"
+          "auth-token": localStorage.getItem('token')
         },
         body: JSON.stringify({ topic, discription, tag })
       });
@@ -105,7 +111,7 @@ try {
      method: "PUT",
      headers: {
        "Content-Type": "application/json",
-       "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmE3ODI1YjFlZjEwM2JiN2ExMjRkMiIsImlhdCI6MTYzNDM2NzUyNX0.ygs2gqGNoTWjngSPccP_PL3YHMjkl6e5_E_47IyXxCc"
+       "auth-token": localStorage.getItem('token')
      },
      body: JSON.stringify({ topic, discription, tag })
    });
@@ -158,7 +164,7 @@ setTimeout(() => {
         <div className="contAINER">
         <Switch>
         <Route exact path="/">
-            <Home />
+            <Home   />
          </Route>
           <Route  exact path="/about">
           <About />

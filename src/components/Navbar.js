@@ -1,8 +1,12 @@
 import React, {useEffect} from 'react';
-import { Link , useLocation} from "react-router-dom";
+import { Link , useLocation,useHistory} from "react-router-dom";
 
 const Navbar = () => {
-
+    let history = useHistory();
+    let logout = () => {console.log("test")
+                        localStorage.removeItem('token')
+                          history.push("/Signin") ; 
+                            }
     let location = useLocation();
     useEffect(() => {
       console.log( location.pathname);
@@ -16,19 +20,22 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                   {localStorage.getItem('token')?<ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className = {`nav-link ${location.pathname==="/"?"active" : ""}`} aria-current="page" to="/">Home</Link>
                         </li>  
                         <li className="nav-item">
                             <Link className = {`nav-link ${location.pathname==="/about"?"active" : ""}`} aria-current="page" to="/about">About</Link>
                         </li>                      
-                    </ul>
+                    </ul>:""} 
                    
-                    <form className="d-flex">
+                   {!localStorage.getItem('token')? <div className="d-flex">
                         <Link className ="btn btn-success mx-1" role="button" to="/Signup">Sign Up </Link>
                         <Link className ="btn btn-success mx-1" role="button" to="/Signin">Sign In </Link>
-                       </form>
+                       </div> :<div className="d-flex">
+                        <button className ="btn btn-success mx-1" onClick ={logout}>Logout</button>
+                       
+                       </div> } 
                 </div>
             </div>
         </nav>

@@ -49,6 +49,7 @@ function Signup() {
     return (
         <div>
             <div className="container my-5 ">
+                <h3>Sign Up to INOTEBOOK</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
